@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Management Portal (Dark Mode)</title>
+    <style>
+        /* --- Dark Mode Variables and General Reset --- */
+        :root {
+            --bg-color-main: #1e1e2f;    /* Deep Dark Background */
+            --bg-color-card: #27293d;    /* Slightly Lighter Card Background */
+            --text-color-light: #f0f0f0; /* Light Text */
+            --text-color-muted: #99a2ad; /* Muted Text/Labels */
+            --accent-color: #0078ff;     /* Blue Accent */
+            --accent-color-hover: #005fcc;
+            --input-bg: #323447;         /* Input Background */
+            --input-border: #444760;     /* Input Border */
+            --shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color-main);
+            margin: 0;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            color: var(--text-color-light);
+        }
+
+        .container {
+            width: 800px; /* Increased width for better dark mode layout */
+        }
+
+        /* --- Headings and Titles --- */
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-color-light);
+            font-size: 36px;
+            font-weight: 300;
+        }
+
+        .card {
+            background: var(--bg-color-card);
+            padding: 30px;
+            margin-bottom: 35px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-dark);
+            border: 1px solid #3c4059; /* Subtle card border */
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: var(--text-color-light);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* --- Form Elements --- */
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color-muted);
+        }
+
+        input:not([type="submit"]), textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color-light);
+            font-size: 15px;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 120, 255, 0.5);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* --- Buttons --- */
+        input[type="submit"] {
+            width: auto;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="submit"]:hover {
+            background: var(--accent-color-hover);
+            transform: translateY(-1px);
+        }
+        
+        .delete-btn {
+            background: #e74c3c;
+        }
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        /* --- Monitoring Links Section --- */
+        .monitoring-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .monitoring-links a {
+            flex-grow: 1;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .prometheus-link {
+            background: #6a4897; /* Purple for Prometheus */
+            color: white;
+        }
+
+        .grafana-link {
+            background: #f47f26; /* Orange for Grafana */
+            color: white;
+        }
+
+        .prometheus-link:hover, .grafana-link:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Blog Management Portal</h1>
+
+    <div class="card">
+        <h2>📝 Create New Blog Post</h2>
+        <form action="/InsertBlog" method="post">
+            <label>Post ID</label>
+            <input type="number" name="pid" required placeholder="e.g., 4">
+
+            <label>Title</label>
+            <input type="text" name="pname" required placeholder="Title of your blog post">
+
+            <label>Content</label>
+            <textarea name="content" rows="5" placeholder="Post content..."></textarea>
+
+            <label>User ID</label>
+            <input type="number" name="uid" required placeholder="Author's User ID (e.g., 1, 2, or 3)">
+
+            <label>Created At</label>
+            <input type="date" name="cat" required>
+
+            <input type="submit" value="Publish Post">
+        </form>
+    </div>
+
+    <div style="display: flex; gap: 35px;">
+        <div class="card" style="flex-grow: 1;">
+            <h2>🗑️ Delete Comment</h2>
+            <form action="/DeleteComment" method="post">
+
+                <label>Comment ID</label>
+                <input type="number" name="cid" required placeholder="ID of the comment to delete">
+
+                <input type="submit" value="Delete Comment" class="delete-btn">
+            </form>
+        </div>
+
+        <div class="card" style="flex-grow: 1;">
+            <h2>📊 Monitoring & Metrics</h2>
+            <div class="monitoring-links">
+                <a href="http://localhost:9090" target="_blank" class="prometheus-link">Prometheus (9090)</a>
+                <a href="http://localhost:3001" target="_blank" class="grafana-link">Grafana (3001)</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
