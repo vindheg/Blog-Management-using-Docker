@@ -22,7 +22,7 @@ This project implements a **containerized blog application** using Docker to ens
 - **Frontend:** HTML, CSS, JavaScript
 - **Backend:** Node.js (Express.js)
 - **Database:** MySQL
-- **Containerization:** Docker, Docker Compose
+- **Containerization:** Docker
 - **Monitoring:** Prometheus, Grafana
 - **Web Server:** Nginx
 
